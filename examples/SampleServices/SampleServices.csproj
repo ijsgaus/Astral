@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Astral.Runes.Rabbit\Astral.Runes.Rabbit.csproj" />
+    <ProjectReference Include="..\..\src\Astral.Runes\Astral.Runes.csproj" />
+  </ItemGroup>
+
+</Project>

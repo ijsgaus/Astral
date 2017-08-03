@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Astral.Schema.Rabbit\Astral.Schema.Rabbit.csproj" />
+    <ProjectReference Include="..\..\src\Astral.Schema\Astral.Schema.csproj" />
+    <ProjectReference Include="..\SampleServices\SampleServices.csproj" />
+  </ItemGroup>
+
+</Project>
