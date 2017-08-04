@@ -6,6 +6,7 @@ using Astral.Runes.Rabbit;
 using Astral.Schema.Exceptions;
 using Newtonsoft.Json.Linq;
 using Astral.Tools;
+using static Astral.Schema.Rabbit.SchemaNames;
 
 
 namespace Astral.Schema.Rabbit
@@ -17,20 +18,28 @@ namespace Astral.Schema.Rabbit
             var typeInfo = serviceType.GetTypeInfo();
             var properties = new List<JProperty>();
             ProcessExchangeAttributes(typeInfo, properties, false);
-
-            return new JProperty("rabbitmq", new JObject(properties.Cast<object>().ToArray()));
+            
+            return 
+                properties.Count > 0
+                ? new JProperty(RabbitMqSection, new JObject(properties.Cast<object>().ToArray()))
+                : null;
         }
 
         public JProperty ExtendEndpoint(PropertyInfo propertyInfo)
         {
             var properties = new List<JProperty>();
             ProcessExchangeAttributes(propertyInfo, properties, true);
-            propertyInfo.GetCustomAttribute<RoutingKeyAttribute>().NotNullMap(p => new JProperty("routingKey", p.Key)).NotNullDo(p => properties.Add(p));
+            propertyInfo.GetCustomAttribute<RoutingKeyAttribute>()
+                .NotNullMap(p => new JProperty(PropRoutingKey, p.Key))
+                .NotNullDo(p => properties.Add(p));
 
-            return new JProperty("rabbitmq", new JObject(properties.Cast<object>().ToArray()));
+            return 
+                properties.Count > 0
+                ? new JProperty(RabbitMqSection, new JObject(properties.Cast<object>().ToArray()))
+                : null;
         }
 
-        public JProperty ExtendContract(Type contractType)
+        public JProperty ExtendObjectContract(Type contractType)
         {
             return null;
         }
@@ -38,12 +47,12 @@ namespace Astral.Schema.Rabbit
         private static void ProcessExchangeAttributes(MemberInfo typeInfo, List<JProperty> properties, bool withoutType)
         {
             var exchange = typeInfo.GetCustomAttribute<ExchangeAttribute>().NotNullMap(p => new[]
-                {new JProperty("exchange", p.Name), new JProperty("exchangeType", p.Type.ToString().ToLower())});
+                {new JProperty(PropExchangeName, p.Name), new JProperty(PropExchangeType, p.Type.ToJsonString())});
             if (exchange == null)
             {
                 if(!withoutType)
                     typeInfo.GetCustomAttribute<ExchangeTypeAttribute>()
-                        .NotNullMap(p => new JProperty("exchangeType", p.Type.ToString().ToLower()))
+                        .NotNullMap(p => new JProperty(PropExchangeType, p.Type.ToJsonString()))
                         .NotNullDo(properties.Add);
             }
             else
@@ -51,13 +60,13 @@ namespace Astral.Schema.Rabbit
 
             var respExchange = typeInfo.GetCustomAttribute<ResponseExchangeAttribute>().NotNullMap(p => new[]
             {
-                new JProperty("responseExchange", p.Name), new JProperty("responseExchangeType", p.Type.ToString().ToLower())
+                new JProperty(PropResponseExchangeName, p.Name), new JProperty(PropResponseExchangeType, p.Type.ToJsonString())
             });
             if (respExchange == null)
             {
                 if (!withoutType)
                     typeInfo.GetCustomAttribute<ResponseExchangeTypeAttribute>()
-                    .NotNullMap(p => new JProperty("responseExchangeType", p.Type.ToString().ToLower()))
+                    .NotNullMap(p => new JProperty(PropResponseExchangeType, p.Type.ToJsonString()))
                     .NotNullDo(properties.Add);
             }
             else

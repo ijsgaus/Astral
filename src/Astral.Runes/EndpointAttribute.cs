@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Astral.Runes
+namespace Astral
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class EndpointNameAttribute : Attribute
+    public class EndpointAttribute : Attribute
     {
-        public EndpointNameAttribute(string name)
+        public EndpointAttribute(string name)
         {
             Name = name;
         }

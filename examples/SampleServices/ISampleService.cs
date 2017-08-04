@@ -1,19 +1,22 @@
-﻿using Astral.Runes;
+﻿using Astral;
+using Astral.Runes;
 using Astral.Runes.Rabbit;
 
 namespace SampleServices
 {
-    [Version("0.5")]
-    [ServiceName("sample.service")]
+    [Service("0.5", "sample.service")]
     [ExchangeType(BusExchangeType.Topic)]
     public interface ISampleService
     {
-        [EndpointName("awesome.event")]
+        [Endpoint("awesome.event")]
         [Exchange("topic.exchange", BusExchangeType.Fanout)]
-        IEventRune<SampleEvent> AwesomeEvent { get; }
+        IEvent<SampleEvent> AwesomeEvent { get; }
 
-        [EndpointName("order.change")]
+        [Endpoint("order.change")]
         [RoutingKey("special.routing.key")]
-        ICommandRune<SampleCommand> OrderChange { get; }
+        ICommand<SampleCommand> OrderChange { get; }
+
+        [Endpoint("an.array")]
+        IEvent<int[]> AnArray { get; }
     }
 }

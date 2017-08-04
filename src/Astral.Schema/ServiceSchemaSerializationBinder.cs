@@ -15,6 +15,14 @@ namespace Astral.Schema
                     return typeof(CommandEndpointSchema);
                 case "callable":
                     return typeof(CallableEndpointSchema);
+                case "objectType":
+                    return typeof(ObjectTypeSchema);
+                case "objectHierarchy":
+                    return typeof(HierarchyTypeSchema);
+                case "primitiveType":
+                    return typeof(PrimitiveTypeSchema);
+                case "arrayType":
+                    return typeof(ArrayTypeSchema);
                 default:
                     throw new InvalidOperationException($"Unknow type {assemblyName} {typeName}");
             }
@@ -36,6 +44,26 @@ namespace Astral.Schema
             if (serializedType == typeof(CallableEndpointSchema))
             {
                 typeName = "callable";
+                return;
+            }
+            if (serializedType == typeof(ObjectTypeSchema))
+            {
+                typeName = "objectType";
+                return;
+            }
+            if (serializedType == typeof(HierarchyTypeSchema))
+            {
+                typeName = "objectHierarchy";
+                return;
+            }
+            if (serializedType == typeof(PrimitiveTypeSchema))
+            {
+                typeName = "primitiveType";
+                return;
+            }
+            if (serializedType == typeof(ArrayTypeSchema))
+            {
+                typeName = "arrayType";
                 return;
             }
             throw new InvalidOperationException($"Unknow type {serializedType}");

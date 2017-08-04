@@ -8,6 +8,6 @@ namespace Astral.Schema.Exceptions
     {
         JProperty ExtendService(Type serviceType);
         JProperty ExtendEndpoint(PropertyInfo propertyInfo);
-        JProperty ExtendContract(Type contractType);
+        JProperty ExtendObjectContract(Type contractType);
     }
 }

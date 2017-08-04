@@ -21,10 +21,9 @@ namespace SchemaWork
             schema.Endpoints.Add("event1", new EventEndpointSchema
             {
                 Title = "Event1",
-                Event = new ContractTypeSchema
+                Event = new ObjectTypeSchema
                 {
-                    Name = "contract1",
-                    Schema = new JObject(new JProperty("test", new JValue("hellow")))
+                    Name = "contract1"
                 }
             });
 
@@ -41,9 +40,12 @@ namespace SchemaWork
             var json = schema.ToString();
             var obj = ServiceSchema.FromString(json);
 
-            var generator = new SchemaGenerator<ISampleService>(new ISchemaGeneratorExtension[] { new RabbitSchemaGenerator() });
+            var generator = new SchemaGenerator<ISampleService>(new RabbitSchemaGenerator());
             schema = generator.Generate();
             json = schema.ToString();
+            schema.ToFile("sample.json");
+
+            var csharp = new CSharpCodeGenerator(schema).GenerateContracts("Test");
 
             Console.ReadKey();
         }

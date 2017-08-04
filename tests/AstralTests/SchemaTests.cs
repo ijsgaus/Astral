@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
-using Astral.Runes;
+using Astral;
 using Astral.Schema;
 using Astral.Schema.Exceptions;
 using Astral.Schema.Generation;
@@ -25,10 +25,9 @@ namespace AstralTests
             schema.Endpoints.Add("event1", new EventEndpointSchema
             {
                 Title = "Event1",
-                Event = new ContractTypeSchema
+                Event = new ObjectTypeSchema()
                 {
                     Name = "contract1",
-                    Schema = new JObject(new JProperty("test", new JValue("hellow")))
                 }
             });
 
@@ -65,26 +64,11 @@ namespace AstralTests
             Assert.Throws<ServiceInterfaceException>(() => new SchemaGenerator<IDisposable>().Generate());
         }
 
-        [Fact]
-        public void ShouldTakeDefaultVersionWhenNotOnlyAttribute()
-        {
-            var generator = new SchemaGenerator<IDisposable>(useOnlyAttributes: false);
-            var schema = generator.Generate();
-            Assert.Equal(Version.Parse("1.0"), schema.Version);
-        }
-
-        [Fact]
-        public void ShouldPreferAttributeSettedVersion()
-        {
-            var generator = new SchemaGenerator<ISampleService>(useOnlyAttributes: false);
-            var schema = generator.Generate();
-            Assert.Equal(Version.Parse("0.5"), schema.Version);
-        }
-
+        
         [Fact]
         public void ShouldSetTitle()
         {
-            var generator = new SchemaGenerator<ISampleService>(useOnlyAttributes: false);
+            var generator = new SchemaGenerator<ISampleService>();
             var schema = generator.Generate();
             Assert.Equal(nameof(ISampleService), schema.Title);
         }
@@ -92,17 +76,21 @@ namespace AstralTests
         [Fact]
         public void ShouldSetNameWhenNotAttribute()
         {
-            var generator = new SchemaGenerator<INoAttributeService>(useOnlyAttributes: false);
-            var schema = generator.Generate();
-            Assert.Equal(nameof(INoAttributeService), schema.Name);
+            var generator = new SchemaGenerator<INoAttributeService>();
+            var schema = generator.Generate(new SchemaGenerationOptions
+            {
+                MemberNameToSchemaName = AstralSchema.ToDottedName
+                    
+            });
+            Assert.Equal(nameof(INoAttributeService).ToDottedName(true), schema.Name);
         }
 
         [Fact]
         public void ShouldSetNameWhenAttribute()
         {
-            var generator = new SchemaGenerator<ISampleService>(useOnlyAttributes: false);
+            var generator = new SchemaGenerator<ISampleService>();
             var schema = generator.Generate();
-            Assert.Equal(typeof(ISampleService).GetTypeInfo().GetCustomAttribute<ServiceNameAttribute>().Name, schema.Name);
+            Assert.Equal(typeof(ISampleService).GetTypeInfo().GetCustomAttribute<ServiceAttribute>().Name, schema.Name);
         }
 
         [Fact]
@@ -111,5 +99,19 @@ namespace AstralTests
             var generator = new SchemaGenerator<INoAttributeService>();
             Assert.Throws<ServiceInterfaceException>(() => generator.Generate());
         }
+
+        [Fact]
+        public void ShouldGenerateDottedNameForInterfaces()
+        {
+            Assert.Equal("no.attribute.service", typeof(INoAttributeService).Name.ToDottedName(true));
+        }
+
+        [Fact]
+        public void ShouldGenerateDottedNameForOthers()
+        {
+            Assert.Equal("inform.translate", "InformTranslate".ToDottedName(false));
+        }
+
+
     }
 }

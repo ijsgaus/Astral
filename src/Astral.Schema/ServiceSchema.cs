@@ -9,18 +9,17 @@ using Newtonsoft.Json.Serialization;
 
 namespace Astral.Schema
 {
-    public class ServiceSchema
+    public class ServiceSchema : GatePartSchema
     {
         public string Name { get; set; }
-        public string Title { get; set; }
         public Version Version { get; set; }
 
-        [JsonExtensionData]
-        public IDictionary<string, JToken> AdditionalData { get; set; } = new Dictionary<string, JToken>();
-        
+
         [JsonProperty(ItemTypeNameHandling = TypeNameHandling.All)]
         public Dictionary<string, EndpointSchema> Endpoints { get; set; } = new Dictionary<string, EndpointSchema>();
 
+
+        public JObject Contracts { get; set; }
 
         public override string ToString()
         {

@@ -1,10 +1,11 @@
-﻿using Astral.Runes;
+﻿using Astral;
+using Astral.Runes;
 
 namespace SampleServices
 {
     public interface INoAttributeService
     {
-        IEventRune<SampleEvent> AwesomeEvent { get; }
-        ICommandRune<SampleCommand> OrderChange { get; }
+        IEvent<SampleEvent> AwesomeEvent { get; }
+        ICommand<SampleCommand> OrderChange { get; }
     }
 }
