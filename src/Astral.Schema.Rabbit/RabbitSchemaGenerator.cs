@@ -39,6 +39,8 @@ namespace Astral.Schema.Rabbit
                 : null;
         }
 
+
+
         public JProperty ExtendObjectContract(Type contractType)
         {
             return null;

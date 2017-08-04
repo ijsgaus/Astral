@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="NJsonSchema" Version="9.4.4" />
     <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="9.4.4" />
@@ -17,6 +18,25 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Astral.Runes\Astral.Runes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\CSharpClassTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CSharpClassTemplate.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Templates\CSharpClassTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CSharpClassTemplate.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

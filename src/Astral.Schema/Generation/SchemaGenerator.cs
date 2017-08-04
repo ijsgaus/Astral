@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using System.Xml;
 using Astral.Schema.Exceptions;
 using Newtonsoft.Json.Linq;
@@ -67,20 +66,6 @@ namespace Astral.Schema.Generation
                 Endpoints = endpoints,
                 Contracts = containerJSchema
             };
-        }
-
-        private class CustomSchemaProcessor : ISchemaProcessor
-        {
-            public Task ProcessAsync(SchemaProcessorContext context)
-            {
-                var contractAttr = context.Type.GetTypeInfo().GetCustomAttribute<ContractAttribute>();
-                if(contractAttr == null) return Task.CompletedTask;
-                context.Schema.ExtensionData = new Dictionary<string, object>();
-                if(contractAttr.Name != null)
-                    context.Schema.ExtensionData["contractName"] = new JValue(contractAttr.Name);
-                context.Schema.ExtensionData["contractVersion"] = new JValue(contractAttr.Version.ToString());
-                return Task.CompletedTask;
-            }
         }
 
         private (string, EndpointSchema, IEnumerable<Type>) GenerateEndpoint(PropertyInfo property, SchemaGenerationOptions options)

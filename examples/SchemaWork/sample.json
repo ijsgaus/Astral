@@ -104,8 +104,8 @@
             ]
           }
         },
-        "contractName": "sample.event",
-        "contractVersion": "0.5"
+        "X-ContractName": "sample.event",
+        "X-ContractVersion": "0.5"
       },
       "SampleEnum": {
         "type": "integer",
@@ -134,8 +134,8 @@
             "$ref": "#/definitions/SampleEvent"
           }
         ],
-        "contractName": "sample.event2",
-        "contractVersion": "0.5"
+        "X-ContractName": "sample.event2",
+        "X-ContractVersion": "0.5"
       },
       "SampleCommand": {
         "type": "object",
@@ -170,8 +170,8 @@
             ]
           }
         },
-        "contractName": "sample.command",
-        "contractVersion": "0.5"
+        "X-ContractName": "sample.command",
+        "X-ContractVersion": "0.5"
       },
       "Operation": {
         "type": "integer",
