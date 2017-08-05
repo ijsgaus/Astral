@@ -5,11 +5,11 @@ using Astral.Runes.Rabbit;
 namespace SampleServices
 {
     [Service("0.5", "sample.service")]
-    [ExchangeType(BusExchangeType.Topic)]
+    [ExchangeOut(ExchangeType.Topic)]
     public interface ISampleService
     {
         [Endpoint("awesome.event")]
-        [Exchange("topic.exchange", BusExchangeType.Fanout)]
+        [ExchangeIn(ExchangeType.Fanout, "topic.exchange")]
         IEvent<SampleEvent> AwesomeEvent { get; }
 
         [Endpoint("order.change")]

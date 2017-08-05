@@ -5,51 +5,36 @@
     "awesome.event": {
       "$type": "event",
       "event": {
-        "$type": "objectHierarchy",
-        "rootTypeReference": "SampleEvent",
-        "members": [
-          {
-            "name": "sample.event2",
-            "typeReference": "SampleEvent2",
-            "version": "0.5",
-            "title": "SampleEvent2"
-          },
-          {
-            "name": "sample.event",
-            "typeReference": "SampleEvent",
-            "version": "0.5",
-            "title": "SampleEvent"
-          }
-        ],
+        "$type": "object",
+        "typeReference": "SampleEvent",
         "title": "SampleEvent"
       },
       "title": "AwesomeEvent",
-      "rabbitmq": {
-        "exchange": "topic.exchange",
-        "exchangeType": "fanout"
+      "X-RabbitMq": {
+        "exchangeIn": "topic.exchange",
+        "exchangeInType": "Fanout"
       }
     },
     "order.change": {
       "$type": "command",
       "command": {
-        "$type": "objectType",
-        "name": "sample.command",
+        "$type": "object",
         "typeReference": "SampleCommand",
-        "version": "0.5",
         "title": "SampleCommand"
       },
       "title": "OrderChange",
-      "rabbitmq": {
+      "X-RabbitMq": {
         "routingKey": "special.routing.key"
       }
     },
     "an.array": {
       "$type": "event",
       "event": {
-        "$type": "arrayType",
+        "$type": "array",
         "element": {
-          "code": "int32",
-          "title": null
+          "$type": "wellKnown",
+          "code": "i32",
+          "title": "Int32"
         },
         "title": "Int32[]"
       },
@@ -204,7 +189,7 @@
     }
   },
   "title": "ISampleService",
-  "rabbitmq": {
-    "exchangeType": "topic"
+  "X-RabbitMq": {
+    "exchangeInType": "Topic"
   }
 }

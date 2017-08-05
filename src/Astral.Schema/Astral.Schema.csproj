@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
+    <PackageReference Include="LanguageExt.Core" Version="2.1.13" />
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="NJsonSchema" Version="9.4.4" />
@@ -15,22 +14,18 @@
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.3.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Astral.Runes\Astral.Runes.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Templates\CSharpClassTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CSharpClassTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Templates\CSharpClassTemplate.cs">
       <DesignTime>True</DesignTime>
@@ -38,5 +33,9 @@
       <DependentUpon>CSharpClassTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-
+  <ItemGroup>
+    <Reference Include="LanguageExt.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>C:\Users\ijsga\.nuget\packages\languageext.core\2.1.13\lib\netstandard1.3\LanguageExt.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

@@ -9,6 +9,10 @@
 [JsonInheritanceAttribute("<#=derivedClass.Key#>", typeof(<#=derivedClass.Value#>))]
 <#  }#>
 <#}#>
+<#if(Model.DerivedClasses != null){
+    foreach(var derivedClass in Model.DerivedClasses) {#>
+[System.Runtime.Serialization.KnownType(typeof(<#=derivedClass.Value#>))]
+<#}}#>
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "<#=JsonSchema4.ToolchainVersion#>")]
 <#if(Options != null) {#>
 [Astral.Runes.Contract("<#=Options.ContractVersion.ToString()#>"<#if(Options.ContractName != null) {#>, "<#=Options.ContractName#>"<#}#>)]	

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Astral.Runes.Rabbit;
 using Astral.Schema.Exceptions;
+using Astral.Schema.Generation;
 using Newtonsoft.Json.Linq;
 using Astral.Tools;
 using static Astral.Schema.Rabbit.SchemaNames;
@@ -13,66 +14,40 @@ namespace Astral.Schema.Rabbit
 {
     public class RabbitSchemaGenerator : ISchemaGeneratorExtension
     {
-        public JProperty ExtendService(Type serviceType)
+        public void ExtendService(Type serviceType, ServiceSchema schema)
         {
             var typeInfo = serviceType.GetTypeInfo();
-            var properties = new List<JProperty>();
-            ProcessExchangeAttributes(typeInfo, properties, false);
+            var serviceExt = new ServiceSchemaExtension(schema);
+            ProcessCommonAttributes(typeInfo, serviceExt);
             
-            return 
-                properties.Count > 0
-                ? new JProperty(RabbitMqSection, new JObject(properties.Cast<object>().ToArray()))
-                : null;
         }
 
-        public JProperty ExtendEndpoint(PropertyInfo propertyInfo)
+        public void ExtendEndpoint(PropertyInfo propertyInfo, EndpointSchema schema)
         {
-            var properties = new List<JProperty>();
-            ProcessExchangeAttributes(propertyInfo, properties, true);
-            propertyInfo.GetCustomAttribute<RoutingKeyAttribute>()
-                .NotNullMap(p => new JProperty(PropRoutingKey, p.Key))
-                .NotNullDo(p => properties.Add(p));
-
-            return 
-                properties.Count > 0
-                ? new JProperty(RabbitMqSection, new JObject(properties.Cast<object>().ToArray()))
-                : null;
+            var endpointExt = new EndpointSchemaExtension(schema);
+            ProcessCommonAttributes(propertyInfo, endpointExt);
         }
-
-
-
-        public JProperty ExtendObjectContract(Type contractType)
+        
+        private static void ProcessCommonAttributes(MemberInfo typeInfo, SchemaExtension schema)
         {
-            return null;
-        }
-
-        private static void ProcessExchangeAttributes(MemberInfo typeInfo, List<JProperty> properties, bool withoutType)
-        {
-            var exchange = typeInfo.GetCustomAttribute<ExchangeAttribute>().NotNullMap(p => new[]
-                {new JProperty(PropExchangeName, p.Name), new JProperty(PropExchangeType, p.Type.ToJsonString())});
-            if (exchange == null)
+            var inExchangeAttr = typeInfo.GetCustomAttribute<ExchangeInAttribute>();
+            if (inExchangeAttr != null)
             {
-                if(!withoutType)
-                    typeInfo.GetCustomAttribute<ExchangeTypeAttribute>()
-                        .NotNullMap(p => new JProperty(PropExchangeType, p.Type.ToJsonString()))
-                        .NotNullDo(properties.Add);
+                if (inExchangeAttr.Name != null)
+                    schema.ExchangeIn = inExchangeAttr.Name;
+                schema.ExchangeInType = inExchangeAttr.Type;
             }
-            else
-                properties.AddRange(exchange);
 
-            var respExchange = typeInfo.GetCustomAttribute<ResponseExchangeAttribute>().NotNullMap(p => new[]
+            var outExchangeAttr = typeInfo.GetCustomAttribute<ExchangeOutAttribute>();
+            if (outExchangeAttr != null)
             {
-                new JProperty(PropResponseExchangeName, p.Name), new JProperty(PropResponseExchangeType, p.Type.ToJsonString())
-            });
-            if (respExchange == null)
-            {
-                if (!withoutType)
-                    typeInfo.GetCustomAttribute<ResponseExchangeTypeAttribute>()
-                    .NotNullMap(p => new JProperty(PropResponseExchangeType, p.Type.ToJsonString()))
-                    .NotNullDo(properties.Add);
+                if (outExchangeAttr.Name != null)
+                    schema.ExchangeIn = outExchangeAttr.Name;
+                schema.ExchangeInType = outExchangeAttr.Type;
             }
-            else
-                properties.AddRange(respExchange);
+            var rkAttr = typeInfo.GetCustomAttribute<RoutingKeyAttribute>();
+            if (rkAttr != null)
+                schema.RoutingKey = rkAttr.Key;
         }
 
         

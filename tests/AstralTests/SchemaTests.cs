@@ -27,7 +27,7 @@ namespace AstralTests
                 Title = "Event1",
                 Event = new ObjectTypeSchema()
                 {
-                    Name = "contract1",
+                    
                 }
             });
 

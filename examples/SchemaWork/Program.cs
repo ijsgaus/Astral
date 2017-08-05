@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Astral.Schema;
 using Astral.Schema.Exceptions;
 using Astral.Schema.Generation;
@@ -23,7 +24,7 @@ namespace SchemaWork
                 Title = "Event1",
                 Event = new ObjectTypeSchema
                 {
-                    Name = "contract1"
+                    
                 }
             });
 
@@ -45,7 +46,10 @@ namespace SchemaWork
             json = schema.ToString();
             schema.ToFile("sample.json");
 
-            var csharp = new CSharpCodeGenerator(schema).GenerateContracts("Test");
+            var csgenerator = new CSharpCodeGenerator(schema, new CSharpCodeGenerationOptions("Test"));
+            var csharp = csgenerator.GenerateContracts();
+            File.WriteAllText("sample.cs.tmp", csharp);
+            var cintf = csgenerator.GenerateInterface();
 
             Console.ReadKey();
         }

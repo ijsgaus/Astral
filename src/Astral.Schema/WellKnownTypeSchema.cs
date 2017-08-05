@@ -1,6 +1,6 @@
 ﻿namespace Astral.Schema
 {
-    public class PrimitiveTypeSchema : ContractTypeSchema
+    public class WellKnownTypeSchema : ContractTypeSchema
     {
         public string Code { get; set; }
     }

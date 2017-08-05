@@ -130,6 +130,14 @@ namespace Astral.Tools
         {
             if (!Equals(obj, null))
                 doer(obj);
-        } 
+        }
+
+        public static string ToCamelCase(this string str)
+        {
+            if (str == null) return null;
+            if (str.Length == 0) return str;
+            if (!char.IsUpper(str, 0)) return str;
+            return char.ToLower(str[0]) + str.Substring(1);
+        }
     }
 }

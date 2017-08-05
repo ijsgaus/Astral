@@ -94,284 +94,305 @@ if(Model.HasDiscriminator){
             
             #line default
             #line hidden
-            this.Write("[System.CodeDom.Compiler.GeneratedCode(\"NJsonSchema\", \"");
             
             #line 12 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+if(Model.DerivedClasses != null){
+    foreach(var derivedClass in Model.DerivedClasses) {
+            
+            #line default
+            #line hidden
+            this.Write("[System.Runtime.Serialization.KnownType(typeof(");
+            
+            #line 14 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(derivedClass.Value));
+            
+            #line default
+            #line hidden
+            this.Write("))]\r\n");
+            
+            #line 15 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+}}
+            
+            #line default
+            #line hidden
+            this.Write("[System.CodeDom.Compiler.GeneratedCode(\"NJsonSchema\", \"");
+            
+            #line 16 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(JsonSchema4.ToolchainVersion));
             
             #line default
             #line hidden
             this.Write("\")]\r\n");
             
-            #line 13 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 17 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(Options != null) {
             
             #line default
             #line hidden
             this.Write("[Astral.Runes.Contract(\"");
             
-            #line 14 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 18 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Options.ContractVersion.ToString()));
             
             #line default
             #line hidden
             this.Write("\"");
             
-            #line 14 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 18 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(Options.ContractName != null) {
             
             #line default
             #line hidden
             this.Write(", \"");
             
-            #line 14 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 18 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Options.ContractName));
             
             #line default
             #line hidden
             this.Write("\"");
             
-            #line 14 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 18 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write(")]\t\r\n");
             
-            #line 15 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 19 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("public partial class ");
             
-            #line 16 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 20 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.Class));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 16 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 20 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.Inheritance));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 18 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 22 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(Model.Inpc){
             
             #line default
             #line hidden
             
-            #line 19 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 23 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 foreach(var property in Model.Properties){
             
             #line default
             #line hidden
             this.Write("    private ");
             
-            #line 20 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 24 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 20 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 24 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.FieldName));
             
             #line default
             #line hidden
             
-            #line 20 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 24 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(property.HasDefaultValue){
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 20 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 24 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.DefaultValue));
             
             #line default
             #line hidden
             
-            #line 20 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 24 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 21 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 25 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 23 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 27 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 24 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 28 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 foreach(var property in Model.Properties){
             
             #line default
             #line hidden
             
-            #line 25 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 29 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   if(property.HasDescription){
             
             #line default
             #line hidden
             this.Write("    /// <summary>");
             
-            #line 26 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 30 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ConversionUtilities.ConvertCSharpDocBreaks(property.Description, 1)));
             
             #line default
             #line hidden
             this.Write("</summary>\r\n");
             
-            #line 27 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 31 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   }
             
             #line default
             #line hidden
             this.Write("    [Newtonsoft.Json.JsonProperty(\"");
             
-            #line 28 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 32 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
             
             #line default
             #line hidden
             this.Write("\", Required = ");
             
-            #line 28 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 32 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.JsonPropertyRequired));
             
             #line default
             #line hidden
             
-            #line 28 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 32 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(property.IsStringEnumArray){
             
             #line default
             #line hidden
             this.Write(", ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter)");
             
-            #line 28 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 32 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write(")]\r\n");
             
-            #line 29 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 33 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   if(property.RenderRequiredAttribute){
             
             #line default
             #line hidden
             this.Write("    [System.ComponentModel.DataAnnotations.Required]\r\n");
             
-            #line 31 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 35 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   }
             
             #line default
             #line hidden
             
-            #line 32 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 36 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   if(property.RenderRangeAttribute){
             
             #line default
             #line hidden
             this.Write("    [System.ComponentModel.DataAnnotations.Range(");
             
-            #line 33 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 37 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.RangeMinimumValue));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 33 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 37 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.RangeMaximumValue));
             
             #line default
             #line hidden
             this.Write(")]\r\n");
             
-            #line 34 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 38 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   }
             
             #line default
             #line hidden
             
-            #line 35 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 39 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   if(property.RenderStringLengthAttribute){
             
             #line default
             #line hidden
             this.Write("    [System.ComponentModel.DataAnnotations.StringLength(");
             
-            #line 36 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 40 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.StringLengthMaximumValue));
             
             #line default
             #line hidden
             
-            #line 36 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 40 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   if(property.StringLengthMinimumValue > 0){ 
             
             #line default
             #line hidden
             this.Write(", MinimumLength = ");
             
-            #line 36 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 40 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.StringLengthMinimumValue));
             
             #line default
             #line hidden
             
-            #line 36 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 40 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write(")]\r\n");
             
-            #line 37 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 41 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   }
             
             #line default
             #line hidden
             
-            #line 38 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 42 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   if(property.RenderRegularExpressionAttribute){
             
             #line default
             #line hidden
             this.Write("    [System.ComponentModel.DataAnnotations.RegularExpression(@\"");
             
-            #line 39 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 43 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.RegularExpressionValue));
             
             #line default
             #line hidden
             this.Write("\")]\r\n");
             
-            #line 40 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   }
             
             #line default
             #line hidden
             
-            #line 41 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 45 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(property.IsStringEnum){
             
             #line default
@@ -379,138 +400,138 @@ if(property.IsStringEnum){
             this.Write("    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumCo" +
                     "nverter))]\r\n");
             
-            #line 43 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 47 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   }
             
             #line default
             #line hidden
             this.Write("    public ");
             
-            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 48 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 48 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.PropertyName));
             
             #line default
             #line hidden
             
-            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 48 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   if(!Model.Inpc){
             
             #line default
             #line hidden
             this.Write(" { get; ");
             
-            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 48 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(property.HasSetter){
             
             #line default
             #line hidden
             this.Write("set; ");
             
-            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 48 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("}");
             
-            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 48 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(property.HasDefaultValue){
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 48 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.DefaultValue));
             
             #line default
             #line hidden
             this.Write(";");
             
-            #line 44 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 48 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 46 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 50 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
   }else{
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        get { return ");
             
-            #line 49 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 53 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.FieldName));
             
             #line default
             #line hidden
             this.Write("; }\r\n");
             
-            #line 50 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 54 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(property.HasSetter){
             
             #line default
             #line hidden
             this.Write("        set \r\n        {\r\n            if (");
             
-            #line 53 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 57 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.FieldName));
             
             #line default
             #line hidden
             this.Write(" != value)\r\n            {\r\n                ");
             
-            #line 55 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 59 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(property.FieldName));
             
             #line default
             #line hidden
             this.Write(" = value; \r\n                RaisePropertyChanged();\r\n            }\r\n        }\r\n");
             
-            #line 59 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 63 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 61 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 65 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 63 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 67 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 64 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 68 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(Model.HasAdditionalPropertiesType){
             
             #line default
             #line hidden
             this.Write("    private System.Collections.Generic.IDictionary<string, ");
             
-            #line 65 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 69 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.AdditionalPropertiesType));
             
             #line default
             #line hidden
             this.Write("> _additionalProperties = new System.Collections.Generic.Dictionary<string, ");
             
-            #line 65 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 69 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.AdditionalPropertiesType));
             
             #line default
@@ -518,7 +539,7 @@ if(Model.HasAdditionalPropertiesType){
             this.Write(">();\r\n\r\n    [Newtonsoft.Json.JsonExtensionData]\r\n    public System.Collections.Ge" +
                     "neric.IDictionary<string, ");
             
-            #line 68 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 72 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.AdditionalPropertiesType));
             
             #line default
@@ -526,13 +547,13 @@ if(Model.HasAdditionalPropertiesType){
             this.Write("> AdditionalProperties\r\n    {\r\n        get { return _additionalProperties; }\r\n   " +
                     "     set { _additionalProperties = value; }\r\n    }\r\n\r\n");
             
-            #line 74 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 78 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 75 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 79 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(Model.Inpc){
             
             #line default
@@ -540,7 +561,7 @@ if(Model.Inpc){
             this.Write("    public event System.ComponentModel.PropertyChangedEventHandler PropertyChange" +
                     "d;\r\n\r\n");
             
-            #line 78 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 82 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default
@@ -548,14 +569,14 @@ if(Model.Inpc){
             this.Write("    public string ToJson() \r\n    {\r\n        return Newtonsoft.Json.JsonConvert.Se" +
                     "rializeObject(this");
             
-            #line 81 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 85 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.JsonSerializerParameterCode));
             
             #line default
             #line hidden
             this.Write(");\r\n    }\r\n    \r\n    public static ");
             
-            #line 84 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 88 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.Class));
             
             #line default
@@ -563,21 +584,21 @@ if(Model.Inpc){
             this.Write(" FromJson(string data)\r\n    {\r\n        return Newtonsoft.Json.JsonConvert.Deseria" +
                     "lizeObject<");
             
-            #line 86 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 90 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.Class));
             
             #line default
             #line hidden
             this.Write(">(data");
             
-            #line 86 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 90 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Model.JsonSerializerParameterCode));
             
             #line default
             #line hidden
             this.Write(");\r\n    }\r\n");
             
-            #line 88 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 92 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 if(Model.Inpc){
             
             #line default
@@ -591,7 +612,7 @@ if(Model.Inpc){
     }
 ");
             
-            #line 96 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
+            #line 100 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
 }
             
             #line default

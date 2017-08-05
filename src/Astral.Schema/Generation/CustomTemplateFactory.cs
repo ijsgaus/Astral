@@ -21,6 +21,7 @@ namespace Astral.Schema.Generation
             if (model is ClassTemplateModel ctm)
             {
                 if (_schema.Definitions.TryGetValue(ctm.Class, out var modelSchema))
+                {
                     if (modelSchema.ExtensionData != null && modelSchema.ExtensionData.ContainsKey("X-ContractVersion"))
                     {
                         var options = new CSharpClassTemplateOptions();
@@ -30,6 +31,9 @@ namespace Astral.Schema.Generation
                             Version.Parse(modelSchema.ExtensionData["X-ContractVersion"].ToString());
                         return new CSharpClassTemplate(ctm, options);
                     }
+                    
+                }
+
             }
             return Default.CreateTemplate(package, template, model);
         }

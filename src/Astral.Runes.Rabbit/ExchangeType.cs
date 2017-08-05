@@ -1,6 +1,6 @@
 ﻿namespace Astral.Runes.Rabbit
 {
-    public enum BusExchangeType
+    public enum ExchangeType
     {
         Fanout,
         Direct,

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -29,18 +30,6 @@ namespace Astral.Schema
 
         }
 
-        public static readonly IReadOnlyDictionary<string, Type> PrimitiveTypesByCode =
-            new ReadOnlyDictionary<string, Type>(new Dictionary<string, Type>()
-            {
-                {"bool", typeof(bool)},
-                {"uint8", typeof(byte) },
-                {"int32", typeof(int) },
-                {"int64", typeof(long) },
-                {"string", typeof(string) },
-                {"byteArray", typeof(byte[]) }
-            });
-
-        public static readonly IReadOnlyDictionary<Type, string> PrimitiveCodesByType =
-            new ReadOnlyDictionary<Type, string>(PrimitiveTypesByCode.ToDictionary(p => p.Value, p => p.Key));
+        
     }
 }

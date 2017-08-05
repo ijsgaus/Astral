@@ -3,15 +3,15 @@
 namespace Astral.Runes.Rabbit
 {
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Property)]
-    public class ResponseExchangeAttribute : Attribute
+    public class ExchangeOutAttribute : Attribute
     {
-        public ResponseExchangeAttribute(string name, BusExchangeType type = BusExchangeType.Direct)
+        public ExchangeOutAttribute(ExchangeType type = ExchangeType.Direct, string name = null)
         {
             Name = name;
             Type = type;
         }
 
         public string Name { get; }
-        public BusExchangeType Type { get; }
+        public ExchangeType Type { get; }
     }
 }

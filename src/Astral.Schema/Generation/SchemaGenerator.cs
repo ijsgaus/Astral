@@ -56,16 +56,17 @@ namespace Astral.Schema.Generation
             var containerJson = jsonSchema.ToJson();
             var containerJSchema = JObject.Parse(containerJson);
 
-            return new ServiceSchema
+            var serviceSchema = new ServiceSchema
             {
                 Version = serviceAttr.Version,
                 Title = typeof(T).Name,
                 Transports = GetTransports(_serviceTypeInfo),
                 Name = serviceName,
-                AdditionalData = _extensions.Select(p => p.ExtendService(typeof(T))).Where(p => p != null).ToDictionary(p => p.Name, p => p.Value),
                 Endpoints = endpoints,
                 Contracts = containerJSchema
             };
+            _extensions.Iter(p => p.ExtendService(typeof(T), serviceSchema));
+            return serviceSchema;
         }
 
         private (string, EndpointSchema, IEnumerable<Type>) GenerateEndpoint(PropertyInfo property, SchemaGenerationOptions options)
@@ -79,56 +80,58 @@ namespace Astral.Schema.Generation
             if (!propertyTypeInfo.IsGenericType)
                 throw new ServiceInterfaceException($"Unknown property type '{property.Name}' of {typeof(T)}");
             var genericType = propertyTypeInfo.GetGenericTypeDefinition();
+            EndpointSchema endpointSchema;
+            List<Type> types = new List<Type>();
             if (genericType == typeof(IEvent<>))
             {
                 var (type, schema) = GenerateContract(propertyTypeInfo.GenericTypeArguments[0], options);
-                var types = type != null ? new[] { type } : new Type[0];
-                return (endpointName, new EventEndpointSchema
+                if(type != null)
+                    types.Add(type);
+                endpointSchema = new EventEndpointSchema
                 {
-                    Title = property.Name,
-                    Event = schema,
-                    AdditionalData = _extensions.Select(p => p.ExtendEndpoint(property)).Where(p => p != null)
-                        .ToDictionary(p => p.Name, p => p.Value),
-                    Transports = GetTransports(property)
-                }, types);
+                    
+                    Event = schema
+                };
             }
+            else
             if (genericType == typeof(ICommand<>))
             {
                 var (type, schema) = GenerateContract(propertyTypeInfo.GenericTypeArguments[0], options);
-                var types = type != null ? new[] {type} : new Type[0];
-                return (endpointName, new CommandEndpointSchema
+                if(type != null)
+                    types.Add(type);
+                endpointSchema = new CommandEndpointSchema
                 {
-                    Title = property.Name,
-                    Command = schema,
-                    AdditionalData = _extensions.Select(p => p.ExtendEndpoint(property)).Where(p => p != null)
-                        .ToDictionary(p => p.Name, p => p.Value),
-                    Transports = GetTransports(property)
-                }, types);
+                    Command = schema
+                };
             }
+            else
             if (genericType == typeof(ICallable<,>))
             {
-                var types = new List<Type>();
                 var (intype, inschema) = GenerateContract(propertyTypeInfo.GenericTypeArguments[0], options);
                 if(intype != null) types.Add(intype);
                 var (outtype, outschema) = GenerateContract(propertyTypeInfo.GenericTypeArguments[0], options);
                 if (outtype != null) types.Add(outtype);
-                return (endpointName, new CallableEndpointSchema
+                endpointSchema = new CallableEndpointSchema
                 {
-                    Title = property.Name,
-                    AdditionalData = _extensions.Select(p => p.ExtendEndpoint(property)).Where(p => p != null)
-                        .ToDictionary(p => p.Name, p => p.Value),
                     Request = inschema,
-                    Response = outschema,
-                    Transports = GetTransports(property)
-                }, types);
+                    Response = outschema
+                };
             }
-            throw new ServiceInterfaceException($"Unknown property type '{property.Name}' of {typeof(T)}");
+            else
+                throw new ServiceInterfaceException($"Unknown property type '{property.Name}' of {typeof(T)}");
+            endpointSchema.Title = property.Name;
+            endpointSchema.Transports = GetTransports(property);
+            _extensions.Iter(p => p.ExtendEndpoint(property, endpointSchema));
+            return (endpointName, endpointSchema, types);
         }
 
         private (Type, ContractTypeSchema) GenerateContract(Type contractType, SchemaGenerationOptions options)
         {
-            if (AstralSchema.PrimitiveCodesByType.ContainsKey(contractType))
-                return (null, new PrimitiveTypeSchema {Code = AstralSchema.PrimitiveCodesByType[contractType]});
+            if (contractType == options.UnitType || options.OtherUnitTypes.Contains(contractType))
+                return (null, new WellKnownTypeSchema { Code = WellKnownTypes.UnitTypeCode, Title = contractType.Name });
+
+            if (WellKnownTypes.CodeByType.ContainsKey(contractType))
+                return (null, new WellKnownTypeSchema {Code = WellKnownTypes.CodeByType[contractType], Title = contractType.Name });
             
             var typeInfo = contractType.GetTypeInfo();
             if (typeInfo.IsArray)
@@ -171,11 +174,10 @@ namespace Astral.Schema.Generation
             }
             if(!typeInfo.IsAbstract)
                 types.Add(contractType);
-            return (contractType, new HierarchyTypeSchema
+            return (contractType, new ObjectTypeSchema
             {
-                RootTypeReference = contractType.Name,
                 Title = contractType.Name,
-                Members = types.Distinct().Select(p => GenerateObjectContract(p, options).Item2).ToArray()
+                TypeReference = contractType.Name
             });
         }
 
@@ -192,11 +194,7 @@ namespace Astral.Schema.Generation
 
             var contractSchema = new ObjectTypeSchema
             {
-                Name = contractName,
                 Title = contractType.Name,
-                Version = contractAttr.Version,
-                AdditionalData = _extensions.Select(p => p.ExtendObjectContract(contractType)).Where(p => p != null)
-                    .ToDictionary(p => p.Name, p => p.Value),
                 TypeReference = contractType.Name
             };
             return (contractType, contractSchema);

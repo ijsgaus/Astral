@@ -4,7 +4,9 @@ namespace Astral.Schema.Rabbit
 {
     public static class Extensions
     {
-        public static string ToJsonString(this BusExchangeType exchangeType)
+        public static string ToJsonString(this ExchangeType exchangeType)
             => exchangeType.ToString().ToLower();
+        
+        
     }
 }
