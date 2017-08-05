@@ -1,29 +1,20 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Reactive.Disposables;
 using System.Threading;
-using Astral.Configuraiton;
-using Astral.Gates;
 using Astral.Porters;
+using RabbitLink;
 
-namespace Astral
+namespace Astral.Rabbit
 {
-    public class Gate : IDisposable
+    public class RabbitPorter : IRpcPorter, IQueuePorter, IDisposable
     {
-        private readonly GateConfig _config;
+        private readonly Link _link;
 
-        internal Gate(GateConfig config)
+        public RabbitPorter(RabbitMqConfig config)
         {
-            _config = config;
-            _disposable.Add(config);
+            _link = new Link(config.Url, cfg => config.Apply(cfg));
+            _disposable.Add(_link);
         }
-
-        public IServiceGate<T> Service<T>()
-        {
-            CheckDisposed();
-            throw new NotImplementedException();
-        }
-
 
         private int _isDisposed = 0;
         private readonly CompositeDisposable _disposable = new CompositeDisposable();

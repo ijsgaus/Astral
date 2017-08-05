@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Astral.Entrance.Fun", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Astral.Entrance.Rabbit", "src\Astral.Entrance.Rabbit\Astral.Entrance.Rabbit.csproj", "{30539C41-1D9E-4F15-8691-8E0B9D8A52B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Astral", "src\Astral\Astral.csproj", "{F22E3A8D-4705-4E5E-BC6F-AE6EF814683E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Astral", "src\Astral\Astral.csproj", "{F22E3A8D-4705-4E5E-BC6F-AE6EF814683E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Astral.Rabbit", "src\Astral.Rabbit\Astral.Rabbit.csproj", "{683E3567-CE4C-414F-B018-07E4E4A022AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{F22E3A8D-4705-4E5E-BC6F-AE6EF814683E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F22E3A8D-4705-4E5E-BC6F-AE6EF814683E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F22E3A8D-4705-4E5E-BC6F-AE6EF814683E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{683E3567-CE4C-414F-B018-07E4E4A022AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683E3567-CE4C-414F-B018-07E4E4A022AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683E3567-CE4C-414F-B018-07E4E4A022AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683E3567-CE4C-414F-B018-07E4E4A022AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,5 +96,6 @@ Global
 		{AAF691E4-99A9-4B6E-9673-EB7864B0E650} = {DE6E91A2-CDD5-47F0-92A8-EF8F483AA648}
 		{30539C41-1D9E-4F15-8691-8E0B9D8A52B8} = {DE6E91A2-CDD5-47F0-92A8-EF8F483AA648}
 		{F22E3A8D-4705-4E5E-BC6F-AE6EF814683E} = {DE6E91A2-CDD5-47F0-92A8-EF8F483AA648}
+		{683E3567-CE4C-414F-B018-07E4E4A022AD} = {DE6E91A2-CDD5-47F0-92A8-EF8F483AA648}
 	EndGlobalSection
 EndGlobal
