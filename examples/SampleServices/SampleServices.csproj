@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Astral.Runes.Rabbit\Astral.Runes.Rabbit.csproj" />
-    <ProjectReference Include="..\..\src\Astral.Runes\Astral.Runes.csproj" />
+    <ProjectReference Include="..\..\src\Astral.Entrance.Rabbit\Astral.Entrance.Rabbit.csproj" />
+    <ProjectReference Include="..\..\src\Astral.Entrance\Astral.Entrance.csproj" />
   </ItemGroup>
 
 </Project>

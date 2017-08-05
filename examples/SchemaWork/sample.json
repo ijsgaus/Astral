@@ -39,6 +39,20 @@
         "title": "Int32[]"
       },
       "title": "AnArray"
+    },
+    "convert": {
+      "$type": "callable",
+      "request": {
+        "$type": "wellKnown",
+        "code": "i32",
+        "title": "Int32"
+      },
+      "response": {
+        "$type": "wellKnown",
+        "code": "string",
+        "title": "String"
+      },
+      "title": "Convert"
     }
   },
   "contracts": {

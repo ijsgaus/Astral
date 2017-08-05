@@ -15,7 +15,7 @@
 <#}}#>
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "<#=JsonSchema4.ToolchainVersion#>")]
 <#if(Options != null) {#>
-[Astral.Runes.Contract("<#=Options.ContractVersion.ToString()#>"<#if(Options.ContractName != null) {#>, "<#=Options.ContractName#>"<#}#>)]	
+[Astral.Contract("<#=Options.ContractVersion.ToString()#>"<#if(Options.ContractName != null) {#>, "<#=Options.ContractName#>"<#}#>)]	
 <#}#>
 public partial class <#=Model.Class#> <#=Model.Inheritance#>
 {

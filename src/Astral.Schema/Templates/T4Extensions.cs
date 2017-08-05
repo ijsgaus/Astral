@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="T4Extensions.cs" company="NJsonSchema">
-//     Copyright (c) Rico Suter. All rights reserved.
+//     Copyright (c) Rico Suter. IncludeAll rights reserved.
 // </copyright>
 // <license>https://github.com/rsuter/NJsonSchema/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>

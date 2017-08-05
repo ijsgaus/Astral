@@ -129,7 +129,7 @@ if(Options != null) {
             
             #line default
             #line hidden
-            this.Write("[Astral.Runes.Contract(\"");
+            this.Write("[Astral.Contract(\"");
             
             #line 18 "E:\Work\Astral\src\Astral.Schema\Templates\CSharpClassTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Options.ContractVersion.ToString()));

@@ -1,4 +1,4 @@
-﻿using Astral.Runes.Rabbit;
+﻿using Astral.Rabbit;
 
 namespace Astral.Schema.Rabbit
 {

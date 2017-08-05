@@ -73,9 +73,13 @@
       <Project>{31cc9d45-ad86-4651-a3ab-eb264f58310c}</Project>
       <Name>SampleServices</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Astral.Runes\Astral.Runes.csproj">
-      <Project>{5205f3f8-8d31-4b7e-8e4b-5f13afb7e8f8}</Project>
-      <Name>Astral.Runes</Name>
+    <ProjectReference Include="..\..\src\Astral.Entrance.Fun\Astral.Entrance.Fun.csproj">
+      <Project>{aaf691e4-99a9-4b6e-9673-eb7864b0e650}</Project>
+      <Name>Astral.Entrance.Fun</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Astral.Entrance\Astral.Entrance.csproj">
+      <Project>{cdfe31c8-8d89-41e2-8920-eba6f516fb7e}</Project>
+      <Name>Astral.Entrance</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Astral.Schema\Astral.Schema.csproj">
       <Project>{4752777d-1681-44ea-9857-2f1dc9fcd8a0}</Project>

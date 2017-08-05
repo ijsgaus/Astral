@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using Astral;
 using Astral.Schema;
-using Astral.Schema.Exceptions;
-using Astral.Schema.Generation;
-using Newtonsoft.Json.Linq;
 using SampleServices;
 using Xunit;
+using Extensions = Astral.Extensions;
 
 namespace AstralTests
 {
@@ -79,7 +76,7 @@ namespace AstralTests
             var generator = new SchemaGenerator<INoAttributeService>();
             var schema = generator.Generate(new SchemaGenerationOptions
             {
-                MemberNameToSchemaName = AstralSchema.ToDottedName
+                MemberNameToSchemaName = Extensions.ToDottedName
                     
             });
             Assert.Equal(nameof(INoAttributeService).ToDottedName(true), schema.Name);

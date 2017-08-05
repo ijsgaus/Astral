@@ -1,10 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Astral.Schema;
-using Astral.Schema.Exceptions;
-using Astral.Schema.Generation;
 using Astral.Schema.Rabbit;
-using Newtonsoft.Json.Linq;
 using SampleServices;
 
 namespace SchemaWork
@@ -46,11 +44,21 @@ namespace SchemaWork
             json = schema.ToString();
             schema.ToFile("sample.json");
 
-            var csgenerator = new CSharpCodeGenerator(schema, new CSharpCodeGenerationOptions("Test"));
-            var csharp = csgenerator.GenerateContracts();
-            File.WriteAllText("sample.cs.tmp", csharp);
-            var cintf = csgenerator.GenerateInterface();
+            var csgenerator = new CSharpCodeGenerator(schema, new CSharpCodeGenerationOptions("Test")
+            {
+                ExcludedTypes = new[] { "SampleCommand" },
+                Endpoints = new[] { "AwesomeEvent" }.Include(), 
+                GeneratedProperties = new Dictionary<string, SkipInclude>
+                {
+                    { "SampleEvent", new [] {"Order"}.Skip() }
+                }
 
+
+            }, new RabbitCSharpGenerator());
+            var csharp = csgenerator.GenerateContracts();
+            File.WriteAllText("sample.cs", csharp);
+            var cintf = csgenerator.GenerateInterface();
+            File.WriteAllText("sampleintf.cs", cintf);
             Console.ReadKey();
         }
     }

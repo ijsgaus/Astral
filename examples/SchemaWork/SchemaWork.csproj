@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Astral.Entrance\Astral.Entrance.csproj" />
     <ProjectReference Include="..\..\src\Astral.Schema.Rabbit\Astral.Schema.Rabbit.csproj" />
     <ProjectReference Include="..\..\src\Astral.Schema\Astral.Schema.csproj" />
     <ProjectReference Include="..\SampleServices\SampleServices.csproj" />

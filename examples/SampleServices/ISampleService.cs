@@ -1,6 +1,6 @@
 ﻿using Astral;
-using Astral.Runes;
-using Astral.Runes.Rabbit;
+using Astral.Rabbit;
+using NJsonSchema;
 
 namespace SampleServices
 {
@@ -18,5 +18,8 @@ namespace SampleServices
 
         [Endpoint("an.array")]
         IEvent<int[]> AnArray { get; }
+
+        [Endpoint("convert")]
+        ICallable<int, string> Convert { get; }
     }
 }
