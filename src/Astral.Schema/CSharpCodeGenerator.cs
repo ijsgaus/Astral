@@ -34,6 +34,8 @@ namespace Astral.Schema
                 writer.WriteLine("using Astral;");
                 _extensions.Iter(p => p.WriteNamespaces(writer, _schema));
                 writer.WriteLine();
+
+                writer.WriteLine(string.Format("[Schema(@\"{0}\")]", _schema.ToString().Replace("\"", "\"\"")));
                 writer.WriteLine($"[Service(\"{_schema.Version}\", \"{_schema.Name}\")]");
                 WriteTransports(_schema, writer);
                 _extensions.Iter(p => p.WriteServiceAttributes(writer, _schema));
@@ -74,10 +76,10 @@ namespace Astral.Schema
 
         private void WriteTransports(GatePartSchema gate, IndentWriter writer)
         {
-            if (_schema.Transports != null)
-                foreach (var transport in gate.Transports)
+            if (_schema.Porters != null)
+                foreach (var transport in gate.Porters)
                 {
-                    writer.WriteLine($"[Transport(TransportType.{transport.Key}, \"{transport.Value}\")");
+                    writer.WriteLine($"[Transport(PorterType.{transport.Key}, \"{transport.Value}\")");
                 }
         }
 

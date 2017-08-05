@@ -58,7 +58,7 @@ namespace Astral.Schema
             {
                 Version = serviceAttr.Version,
                 Title = typeof(T).Name,
-                Transports = GetTransports(_serviceTypeInfo),
+                Porters = GetTransports(_serviceTypeInfo),
                 Name = serviceName,
                 Endpoints = endpoints,
                 Contracts = containerJSchema
@@ -118,7 +118,7 @@ namespace Astral.Schema
             else
                 throw new ServiceInterfaceException($"Unknown property type '{property.Name}' of {typeof(T)}");
             endpointSchema.Title = property.Name;
-            endpointSchema.Transports = GetTransports(property);
+            endpointSchema.Porters = GetTransports(property);
             _extensions.Iter(p => p.ExtendEndpoint(property, endpointSchema));
             return (endpointName, endpointSchema, types);
         }
@@ -198,10 +198,10 @@ namespace Astral.Schema
             return (contractType, contractSchema);
         }
 
-        private static Dictionary<TransportType, string> GetTransports(MemberInfo typeInfo)
+        private static Dictionary<PorterType, string> GetTransports(MemberInfo typeInfo)
         {
-            var transports = new Dictionary<TransportType, string>();
-            foreach (var transport in typeInfo.GetCustomAttributes<TransportAttribute>())
+            var transports = new Dictionary<PorterType, string>();
+            foreach (var transport in typeInfo.GetCustomAttributes<PorterAttribute>())
             {
                 transports[transport.Type] = transport.Code;
             }

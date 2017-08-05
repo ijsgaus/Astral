@@ -1,6 +1,7 @@
 ﻿namespace Astral
 {
-    public interface IEvent<T>
+    public class Gate
     {
+        
     }
 }

@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Astral.Entrance.Fun\Astral.Entrance.Fun.csproj" />
+    <ProjectReference Include="..\Astral.Entrance\Astral.Entrance.csproj" />
+  </ItemGroup>
+
+</Project>

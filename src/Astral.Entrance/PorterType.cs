@@ -1,6 +1,6 @@
 ﻿namespace Astral
 {
-    public enum TransportType
+    public enum PorterType
     {
         Queue,
         Rpc

@@ -4,11 +4,11 @@ namespace Astral.Schema
 {
     public class GatePartSchema : SchemaBase
     {
-        public IDictionary<TransportType, string> Transports { get; set; } = new Dictionary<TransportType, string>();
+        public IDictionary<PorterType, string> Porters { get; set; } = new Dictionary<PorterType, string>();
 
         public bool ShouldSerializeTransports()
         {
-            return Transports.Count > 0;
+            return Porters.Count > 0;
         }
     }
 }

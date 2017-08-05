@@ -3,15 +3,15 @@
 namespace Astral
 {
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Property, AllowMultiple = true)]
-    public class TransportAttribute : Attribute
+    public class PorterAttribute : Attribute
     {
-        public TransportAttribute(TransportType type, string code)
+        public PorterAttribute(PorterType type, string code)
         {
             Type = type;
             Code = code;
         }
 
-        public TransportType Type { get;  }
+        public PorterType Type { get;  }
         public string Code { get; }
     }
 }

@@ -56,9 +56,9 @@ namespace SchemaWork
 
             }, new RabbitCSharpGenerator());
             var csharp = csgenerator.GenerateContracts();
-            File.WriteAllText("sample.cs", csharp);
+            //File.WriteAllText("sample.cs", csharp);
             var cintf = csgenerator.GenerateInterface();
-            File.WriteAllText("sampleintf.cs", cintf);
+            File.WriteAllText("sample.cs", csharp + "\n" + cintf);
             Console.ReadKey();
         }
     }
