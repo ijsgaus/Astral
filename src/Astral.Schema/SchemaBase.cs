@@ -6,7 +6,7 @@ namespace Astral.Schema
 {
     public class SchemaBase
     {
-        
+
         public string Title { get; set; }
 
         [JsonExtensionData]

@@ -1,43 +1,83 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
+using System.Reflection;
 using System.Threading;
 using Astral.Configuraiton;
 using Astral.Gates;
-using Astral.Porters;
+using Astral.Schema;
+using Astral.Transports;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Astral
 {
-    public class Gate : IDisposable
+    public class Gate : DisposableBag
     {
+        private readonly ILoggerFactory _loggerFactory;
         private readonly GateConfig _config;
 
-        internal Gate(GateConfig config)
+        internal Gate(ILoggerFactory loggerFactory, GateConfig config)
         {
+            _loggerFactory = loggerFactory;
+            _logger = loggerFactory.CreateLogger<Gate>();
             _config = config;
-            _disposable.Add(config);
+            Disposables.Add(config);
         }
 
         public IServiceGate<T> Service<T>()
         {
             CheckDisposed();
-            throw new NotImplementedException();
+            var typeInfo = typeof(T).GetTypeInfo();
+            if(!typeInfo.IsInterface) throw new ArgumentException($"Invalid service type {typeof(T)} - must be interface");
+            
+            return new ServiceGate<T>(_config, _config.GetServiceSchema<T>())
+                .WithSide(() => _logger.LogTrace("Service gate for service {service}", typeof(T)));
         }
 
 
-        private int _isDisposed = 0;
-        private readonly CompositeDisposable _disposable = new CompositeDisposable();
+        private static readonly ConcurrentDictionary<string, Type> RpcPorterTypes = new ConcurrentDictionary<string, Type>();
+        private static readonly ConcurrentDictionary<string, Type> QueuePorterTypes = new ConcurrentDictionary<string, Type>();
+        private readonly ILogger<Gate> _logger;
 
-        private void CheckDisposed()
+        public static void RegisterPorterType<T>(string porterCode, bool asDefault = true)
+            where T : ITransport
         {
-            if (Interlocked.CompareExchange(ref _isDisposed, 0, 0) == 1)
-                throw new ObjectDisposedException(GetType().Name);
+            var success = false;
+            if (typeof(IRpcTransport).IsAssignableFrom(typeof(T)))
+            {
+                success = true;
+                RpcPorterTypes.AddOrUpdate("", _ => typeof(T), (s, t) => asDefault ? typeof(T) : t);
+                RpcPorterTypes.AddOrUpdate(porterCode, _ => typeof(T), (s, t) => typeof(T));
+            }
+            if (typeof(IQueueTransport).IsAssignableFrom(typeof(T)))
+            {
+                success = true;
+                QueuePorterTypes.AddOrUpdate("", _ => typeof(T), (s, t) => asDefault ? typeof(T) : t);
+                QueuePorterTypes.AddOrUpdate(porterCode, _ => typeof(T), (s, t) => typeof(T));
+            }
+            if(!success) throw new ArgumentOutOfRangeException($"Unknown trnsport subtype for {typeof(T)}");
         }
 
-        public void Dispose()
+        internal static IRpcTransport GetRpcPorter(string code, IServiceProvider serviceProvider)
         {
-            if (Interlocked.CompareExchange(ref _isDisposed, 0, 1) == 1) return;
-            _disposable.Dispose();
+            if (RpcPorterTypes.TryGetValue(code, out var type))
+                return (IRpcTransport) serviceProvider.GetRequiredService(type);
+            var codeName = code == "" ? "default" : $"'{code}'";
+            throw new InvalidOperationException($"Cannot find {codeName} rpc transport ");
         }
+
+        internal static IQueueTransport GetQueuePorter(string code, IServiceProvider serviceProvider)
+        {
+            if (RpcPorterTypes.TryGetValue(code, out var type))
+                return (IQueueTransport)serviceProvider.GetRequiredService(type);
+            var codeName = code == "" ? "default" : $"'{code}'";
+            throw new InvalidOperationException($"Cannot find {codeName} queue transport ");
+        }
+
+        internal static IEnumerable<Type> GetAllPorterTypes()
+            => RpcPorterTypes.Values.Union(QueuePorterTypes.Values).Distinct();
     }
 }

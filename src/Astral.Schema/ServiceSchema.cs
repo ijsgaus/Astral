@@ -63,7 +63,8 @@ namespace Astral.Schema
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
             SerializationBinder = new ServiceSchemaSerializationBinder(),
-            Converters = new JsonConverter[] { new VersionConverter(), }
+            Converters = new JsonConverter[] { new VersionConverter(), },
+            ReferenceLoopHandling = ReferenceLoopHandling.Serialize
 
         };
 

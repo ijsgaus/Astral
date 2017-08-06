@@ -11,14 +11,12 @@ namespace Astral.Schema
 {
     public class SchemaGenerator<T>
     {
-        private readonly ISchemaGeneratorExtension[] _extensions;
-        
         private readonly TypeInfo _serviceTypeInfo;
 
-        public SchemaGenerator(params ISchemaGeneratorExtension[] extensions)
+        public SchemaGenerator()
         {
             if(!typeof(T).GetTypeInfo().IsInterface) throw new ArgumentException($"Shema type must be interface");
-            _extensions = extensions ?? new ISchemaGeneratorExtension[0];
+            
             
             _serviceTypeInfo = typeof(T).GetTypeInfo();
         }
@@ -34,12 +32,23 @@ namespace Astral.Schema
             if (serviceName == null)
                 throw new ServiceInterfaceException($"Cannot determine service name of {typeof(T)}");
 
-            var endpoints = new Dictionary<string, EndpointSchema>();
+            
+
+            var serviceSchema = new ServiceSchema
+            {
+                Version = serviceAttr.Version,
+                Title = typeof(T).Name,
+                Transports = GetTransports(_serviceTypeInfo),
+                Name = serviceName
+                
+            };
+
+            
             var contracts = new List<Type>();
             foreach (var propertyInfo in typeof(T).GetProperties())
             {
-                var (name, schema, types) = GenerateEndpoint(propertyInfo, options);
-                endpoints.Add(name, schema);
+                var (name, schema, types) = GenerateEndpoint(propertyInfo, options, serviceSchema);
+                serviceSchema.Endpoints.Add(name, schema);
                 contracts.AddRange(types);
             }
             var containerGenerator = new ContainerClassBuilder(contracts.Distinct(),
@@ -49,25 +58,16 @@ namespace Astral.Schema
             var jsonSchema = JsonSchema4.FromTypeAsync(containerType, new JsonSchemaGeneratorSettings
             {
                 SchemaProcessors = { new CustomSchemaProcessor() },
-                
+
             }).Result;
             var containerJson = jsonSchema.ToJson();
             var containerJSchema = JObject.Parse(containerJson);
-
-            var serviceSchema = new ServiceSchema
-            {
-                Version = serviceAttr.Version,
-                Title = typeof(T).Name,
-                Porters = GetTransports(_serviceTypeInfo),
-                Name = serviceName,
-                Endpoints = endpoints,
-                Contracts = containerJSchema
-            };
-            _extensions.Iter(p => p.ExtendService(typeof(T), serviceSchema));
+            serviceSchema.Contracts = containerJSchema;
+            options.Extensions.Iter(p => p.ExtendService(typeof(T), serviceSchema));
             return serviceSchema;
         }
 
-        private (string, EndpointSchema, IEnumerable<Type>) GenerateEndpoint(PropertyInfo property, SchemaGenerationOptions options)
+        private (string, EndpointSchema, IEnumerable<Type>) GenerateEndpoint(PropertyInfo property, SchemaGenerationOptions options, ServiceSchema serviceSchema)
         {
             var endpointAttr = property.GetCustomAttribute<EndpointAttribute>();
             var endpointName = endpointAttr?.Name ?? options.MemberNameToSchemaName?.Invoke(property.Name, false);
@@ -118,8 +118,9 @@ namespace Astral.Schema
             else
                 throw new ServiceInterfaceException($"Unknown property type '{property.Name}' of {typeof(T)}");
             endpointSchema.Title = property.Name;
-            endpointSchema.Porters = GetTransports(property);
-            _extensions.Iter(p => p.ExtendEndpoint(property, endpointSchema));
+            endpointSchema.Transports = GetTransports(property);
+            endpointSchema.Owner = serviceSchema;
+            options.Extensions.Iter(p => p.ExtendEndpoint(property, endpointSchema));
             return (endpointName, endpointSchema, types);
         }
 
@@ -198,10 +199,10 @@ namespace Astral.Schema
             return (contractType, contractSchema);
         }
 
-        private static Dictionary<PorterType, string> GetTransports(MemberInfo typeInfo)
+        private static Dictionary<TransportType, string> GetTransports(MemberInfo typeInfo)
         {
-            var transports = new Dictionary<PorterType, string>();
-            foreach (var transport in typeInfo.GetCustomAttributes<PorterAttribute>())
+            var transports = new Dictionary<TransportType, string>();
+            foreach (var transport in typeInfo.GetCustomAttributes<TransportAttribute>())
             {
                 transports[transport.Type] = transport.Code;
             }

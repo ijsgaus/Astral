@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Astral.Entrance.Fun\Astral.Entrance.Fun.csproj" />
     <ProjectReference Include="..\Astral.Entrance\Astral.Entrance.csproj" />
+    <ProjectReference Include="..\Astral.Schema\Astral.Schema.csproj" />
   </ItemGroup>
 
 </Project>

@@ -12,4 +12,8 @@
     <PackageReference Include="System.ValueTuple" Version="4.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Astral.Entrance\Astral.Entrance.csproj" />
+  </ItemGroup>
+
 </Project>

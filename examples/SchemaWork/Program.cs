@@ -39,11 +39,11 @@ namespace SchemaWork
             var json = schema.ToString();
             var obj = ServiceSchema.FromString(json);
 
-            var generator = new SchemaGenerator<ISampleService>(new RabbitSchemaGenerator());
-            schema = generator.Generate();
+            var generator = new SchemaGenerator<ISampleService>();
+            schema = generator.Generate(new SchemaGenerationOptions(new RabbitSchemaGenerator()));
             json = schema.ToString();
             schema.ToFile("sample.json");
-
+            schema = ServiceSchema.FromString(json);
             var csgenerator = new CSharpCodeGenerator(schema, new CSharpCodeGenerationOptions("Test")
             {
                 ExcludedTypes = new[] { "SampleCommand" },

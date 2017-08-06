@@ -76,10 +76,10 @@ namespace Astral.Schema
 
         private void WriteTransports(GatePartSchema gate, IndentWriter writer)
         {
-            if (_schema.Porters != null)
-                foreach (var transport in gate.Porters)
+            if (_schema.Transports != null)
+                foreach (var transport in gate.Transports)
                 {
-                    writer.WriteLine($"[Transport(PorterType.{transport.Key}, \"{transport.Value}\")");
+                    writer.WriteLine($"[Transport(TransportType.{transport.Key}, \"{transport.Value}\")");
                 }
         }
 
