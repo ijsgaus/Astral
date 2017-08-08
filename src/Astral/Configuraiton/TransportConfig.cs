@@ -9,7 +9,7 @@ namespace Astral.Configuraiton
         private readonly ConcurrentDictionary<string, IRpcTransport> _rpcPorters = new ConcurrentDictionary<string, IRpcTransport>();
         private readonly ConcurrentDictionary<string, IQueueTransport> _queuePorters = new ConcurrentDictionary<string, IQueueTransport>();
 
-        internal void RegisterPorter<T>(string porterCode, T porter, TransportType? type = null, bool asDefault = true)
+        internal void RegisterTransport<T>(string porterCode, T porter, TransportType? type = null, bool asDefault = true)
             where T : ITransport
         {
             CheckDisposed();

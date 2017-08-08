@@ -8,13 +8,12 @@ namespace Astral
 {
     internal class ServiceGate<T> : IServiceGate<T>
     {
-        private readonly GateConfig _config;
-        private readonly ServiceSchema _schema;
+        private readonly ServiceConfig<T> _config;
 
-        internal ServiceGate(GateConfig config, ServiceSchema schema)
+
+        internal ServiceGate(ServiceConfig<T> config)
         {
             _config = config;
-            _schema = schema;
         }
 
         public IEvent<TEvent> Endpoint<TEvent>(Expression<Func<T, IEvent<TEvent>>> selector)

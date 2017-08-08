@@ -20,6 +20,7 @@ namespace Astral.Endpoints
         protected ILoggerFactory LoggerFactory { get;  }
         public ILogger Logger { get; }
 
+
         
     }
 }

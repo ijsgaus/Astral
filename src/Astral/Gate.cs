@@ -33,7 +33,7 @@ namespace Astral
             var typeInfo = typeof(T).GetTypeInfo();
             if(!typeInfo.IsInterface) throw new ArgumentException($"Invalid service type {typeof(T)} - must be interface");
             
-            return new ServiceGate<T>(_config, _config.GetServiceSchema<T>())
+            return new ServiceGate<T>(_config, _config.Service<T>())
                 .WithSide(() => _logger.LogTrace("Service gate for service {service}", typeof(T)));
         }
 

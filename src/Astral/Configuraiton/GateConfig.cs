@@ -47,6 +47,8 @@ namespace Astral.Configuraiton
             });
         }
         
+        internal T GetTransport<ITra>
+
 
         internal IRpcTransport GetRpcPorter(IServiceProvider provider, string code = null)
         {

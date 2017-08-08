@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Astral.Configuraiton;
 using Astral.Data;
 using Astral.Schema;
+using Astral.Transports;
 using Microsoft.Extensions.Logging;
 
 namespace Astral.Endpoints
@@ -21,7 +22,7 @@ namespace Astral.Endpoints
 
         public Task PublishAsync(TEvent message, CancellationToken token)
         {
-
+            var transport = _config.GetTransport<IQueueTransport>();
             throw new NotImplementedException();
         }
 

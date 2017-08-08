@@ -27,13 +27,13 @@ namespace Astral.Configuraiton
             _transportConfig = new TransportConfig();
         }
 
-        public void RegisterPorter<T>(string porterCode, T porter, TransportType? type = null, bool asDefault = true)
+        public void RegisterTransport<T>(string porterCode, T porter, TransportType? type = null, bool asDefault = true)
             where T : ITransport
-            => _transportConfig.RegisterPorter(porterCode, porter, type, asDefault);
+            => _transportConfig.RegisterTransport(porterCode, porter, type, asDefault);
 
         public Gate Build()
         {
-            var gate =  new Gate(new GateConfig(_options, _transportConfig));
+            var gate =  new Gate(_loggerFactory, new GateConfig(_options, _transportConfig));
             _transportConfig = new TransportConfig();
             return gate;
         }
