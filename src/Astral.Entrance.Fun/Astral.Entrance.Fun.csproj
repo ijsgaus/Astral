@@ -1,19 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
     <RootNamespace>Astral.Fun</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="LanguageExt.Core" Version="2.1.13" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="NJsonSchema" Version="9.4.4" />
     <PackageReference Include="System.ValueTuple" Version="4.3.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Astral.Entrance\Astral.Entrance.csproj" />
   </ItemGroup>
-
 </Project>

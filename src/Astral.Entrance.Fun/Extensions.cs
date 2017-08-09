@@ -42,7 +42,7 @@ namespace Astral.Fun
             return option.Map(p => (object) p);
         }
 
-        public static T Check<T>(this Pred<T> predicate, T value)
+        public static T ValidOrThrow<T>(this Pred<T> predicate, T value)
 
         {
             if (predicate.True(value)) return value;

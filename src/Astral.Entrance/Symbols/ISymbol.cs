@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace Astral.Fun
+namespace Astral.Symbols
 {
     public interface ISymbol
     {
+        string Name { get; }
         Type Type { get; }
-        object UnsafeValue { get; }
     }
 
     public interface ISymbol<T> : ISymbol
     {
-        T Value { get; }
+        
     }
 }
